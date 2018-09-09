@@ -19,6 +19,19 @@ then
     sh ./start > /dev/null
 else
     AGENT_ID=$(docker ps | sed -n 2p | cut -c 1-12)
+    AGENT_WAIT_ATTEMPT=1
+    while [[ -z ${AGENT_ID} ]]; do
+        if [[ ${WAIT_ATTEMPT} -gt 3 ]]; then
+            echo "Giving up!"
+            exit 1
+        fi
+        echo "Waiting for agent ID ..."
+        AGENT_WAIT_ATTEMPT=$(($AGENT_WAIT_ATTEMPT+1))
+        sleep 3s
+        AGENT_ID=$(docker ps | sed -n 2p | cut -c 1-12)
+    done
+    echo "Got agent ID ${AGENT_ID}"
+    
     export LOCAL_AGENT_IMAGE=$(docker inspect --format='{{.Config.Image}}' ${AGENT_ID})
 
     export CODEBUILD_LOCAL_SOURCE_DIRECTORY=${SOURCE}
