@@ -19,5 +19,9 @@ index 5a2b917..51a900a 100755
  # Note we do not expose the AWS_SECRET_ACCESS_KEY or the AWS_SESSION_TOKEN
  exposed_command=$docker_command
  ```
+## License
+
+Published under the [2-clause BSD license][license].
 
 [#73]: https://github.com/aws/aws-codebuild-docker-images/issues/73
+[license]: https://opensource.org/licenses/BSD-2-Clause
